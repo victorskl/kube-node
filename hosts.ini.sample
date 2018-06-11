@@ -1,0 +1,5 @@
+[base-servers]
+api-server      ansible_host=10.1.0.21
+
+[proxy-servers]
+proxy-server    ansible_host=10.1.0.20

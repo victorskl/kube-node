@@ -1,0 +1,3 @@
+- name: Set hostname {{ inventory_hostname }}
+  hostname:
+    name: "{{ inventory_hostname }}"

@@ -1,0 +1,26 @@
+- hosts: proxy-servers
+  gather_facts: False
+
+  tasks:
+    - import_tasks: tasks/ubuntu-minimal-python.yaml
+
+    - import_tasks: tasks/set-timezone.yaml
+
+    - import_tasks: tasks/set-hostname.yaml
+
+    - import_tasks: tasks/set-hosts.yaml
+
+    - import_tasks: tasks/certbot.yaml
+
+    - name: Install haproxy
+      apt:
+        name:
+          - haproxy
+        state: latest
+        install_recommends: no
+
+    - name: Enable and Start haproxy
+      systemd:
+        name: haproxy.service
+        enabled: yes
+        state: restarted

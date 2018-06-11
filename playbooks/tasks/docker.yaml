@@ -1,0 +1,40 @@
+- name: Add Docker official GPG key
+  apt_key:
+    id: 0EBFCD88
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Set up the Docker stable repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu xenial stable
+    state: present
+
+- name: apt-get update
+  apt:
+    update_cache: yes
+
+- name: Install Docker-CE
+  apt:
+    name: docker-ce=18.03.1~ce-0~ubuntu
+    install_recommends: no
+
+- name: Install docker-compose
+  get_url:
+    url: https://github.com/docker/compose/releases/download/1.21.2/docker-compose-Linux-x86_64
+    dest: /usr/local/bin/docker-compose
+
+- name: chmod docker-compose
+  file:
+    path: /usr/local/bin/docker-compose
+    mode: u+x,g+x,o+x
+
+- name: Upload daemon.json config
+  copy:
+    src: ../../docker/daemon.json
+    dest: /etc/docker/daemon.json
+
+- name: Reload docker service
+  systemd:
+    daemon-reload: yes
+    name: docker
+    state: restarted

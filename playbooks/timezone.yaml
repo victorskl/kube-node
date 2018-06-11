@@ -1,0 +1,13 @@
+- hosts: all
+  gather_facts: False
+
+  tasks:
+    - import_tasks: tasks/ubuntu-minimal-python.yaml
+
+    - name: Current Timezone
+      command: date
+
+    - import_tasks: tasks/set-timezone.yaml
+
+    - name: Check Timezone
+      command: date

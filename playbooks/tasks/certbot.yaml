@@ -1,0 +1,18 @@
+- name: Install Certbot dependencies
+  apt:
+    name:
+      - software-properties-common
+    state: latest
+    install_recommends: no
+
+- name: Add Certbot repo
+  apt_repository:
+    repo: 'ppa:certbot/certbot'
+    update_cache: yes
+
+- name: Install Certbot
+  apt:
+    name:
+      - certbot
+    state: latest
+    install_recommends: no

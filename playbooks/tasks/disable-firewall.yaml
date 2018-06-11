@@ -1,0 +1,5 @@
+- name: Stop and disable firewall
+  systemd:
+    name: ufw
+    enabled: no
+    state: stopped
