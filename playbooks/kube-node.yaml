@@ -4,21 +4,17 @@
   tasks:
     - import_tasks: tasks/ubuntu-minimal-python.yaml
 
+    - import_tasks: tasks/curl-apt-over-https.yaml
+
     - import_tasks: tasks/set-timezone.yaml
-      vars:
-        tz: Australia/Melbourne
+
+    - import_tasks: tasks/disable-firewall.yaml
 
     - import_tasks: tasks/set-hostname.yaml
 
     - import_tasks: tasks/set-hosts.yaml
 
-    - import_tasks: tasks/disable-firewall.yaml
-
-    - import_tasks: tasks/curl-apt-over-https.yaml
-
     - import_tasks: tasks/docker.yaml
-      vars:
-        docker_ver: 18.03.0~ce-0~ubuntu
 
 #    - name: Stop docker daemon
 #      systemd:
@@ -46,7 +42,11 @@
 #        state: started
 
     - name: Add Kubernetes official GPG key
-      shell: "curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -"
+#      shell: "curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -"
+      apt_key:
+        id: BA07F4FB
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        state: present
 
     - name: Set up the Docker stable repository
       apt_repository:
@@ -63,8 +63,17 @@
         update_cache: yes
         allow_unauthenticated: yes
 
-    - name: Adjust cgroup-driver flag
-      shell: "sed -i 's/cgroup-driver=systemd/cgroup-driver=cgroupfs/g' /etc/systemd/system/kubelet.service.d/10-kubeadm.conf"
+#    Check Docker Cgroup driver: docker info | grep -i cgroup
+#    Adjust the Kubelet Cgroup driver if different to Docker Cgroup driver
+#
+#    https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/
+#    --cgroup-driver string     Default: "cgroupfs"
+#     Driver that the kubelet uses to manipulate cgroups on the host. Possible values: 'cgroupfs', 'systemd'
+#
+#    As of v1.10, the default is already cgroupfs, so this is no longer required.
+#
+#    - name: Adjust cgroup-driver flag
+#      shell: "sed -i 's/cgroup-driver=systemd/cgroup-driver=cgroupfs/g' /etc/systemd/system/kubelet.service.d/10-kubeadm.conf"
 
     - name: Enable and restart kubelet
       systemd:
@@ -72,4 +81,3 @@
         name: kubelet
         enabled: yes
         state: restarted
-
