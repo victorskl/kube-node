@@ -3,3 +3,9 @@ api-server      ansible_host=10.1.0.21
 
 [proxy-servers]
 proxy-server    ansible_host=10.1.0.20
+
+[kube-nodes]
+kube-master1    ansible_host=10.1.0.10
+kube-node1      ansible_host=10.1.0.11
+kube-node2      ansible_host=10.1.0.12
+kube-node3      ansible_host=10.1.0.13

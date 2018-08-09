@@ -12,7 +12,7 @@
 
     - import_tasks: tasks/set-hostname.yaml
 
-    - import_tasks: tasks/set-hosts.yaml
+#    - import_tasks: tasks/set-hosts.yaml
 
     - import_tasks: tasks/docker.yaml
 
@@ -56,9 +56,9 @@
     - name: Installing kubeadm kubelet and kubectl
       apt:
         name:
-          - kubelet
-          - kubeadm
-          - kubectl
+          - kubelet=1.10.2-00
+          - kubeadm=1.10.2-00
+          - kubectl=1.10.2-00
         install_recommends: no
         update_cache: yes
         allow_unauthenticated: yes
