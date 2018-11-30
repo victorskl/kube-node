@@ -3,5 +3,5 @@
 Bootstrap Kubernetes node using Ansible
 
 ```
-bash setup.sh ubuntu ~/.ssh/id_rsa playbooks/kube-node.yaml
+bash setup.sh hosts.ini ubuntu ~/.ssh/id_rsa playbooks/kube-node.yaml
 ```

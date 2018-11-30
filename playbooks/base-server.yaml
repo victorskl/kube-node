@@ -1,17 +1,17 @@
 - hosts: base-servers
-  gather_facts: False
+  gather_facts: true
 
   tasks:
-    - import_tasks: tasks/ubuntu-minimal-python.yaml
+#    - import_tasks: tasks/ubuntu-minimal-python.yaml
 
-    - import_tasks: tasks/curl-apt-over-https.yaml
+#    - import_tasks: tasks/curl-apt-over-https.yaml
 
     - import_tasks: tasks/set-timezone.yaml
 
     - import_tasks: tasks/disable-firewall.yaml
 
-    - import_tasks: tasks/set-hostname.yaml
+#    - import_tasks: tasks/set-hostname.yaml
 
-    - import_tasks: tasks/set-hosts.yaml
+#    - import_tasks: tasks/set-hosts.yaml
 
     - import_tasks: tasks/docker.yaml

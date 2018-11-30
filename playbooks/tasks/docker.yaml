@@ -6,27 +6,39 @@
 
 - name: Set up the Docker stable repository
   apt_repository:
-    repo: deb https://download.docker.com/linux/ubuntu xenial stable
-    state: present
-
-- name: apt-get update
-  apt:
+    repo: "deb https://download.docker.com/linux/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} stable"
+    mode: '644'
     update_cache: yes
+    state: present
 
 - name: Install Docker-CE
   apt:
-    name: docker-ce=18.03.1~ce-0~ubuntu
+#    name: docker-ce=18.03.1~ce-0~ubuntu
+    name: docker-ce
+    state: latest
+    update_cache: yes
     install_recommends: no
 
-- name: Install docker-compose
-  get_url:
-    url: https://github.com/docker/compose/releases/download/1.21.2/docker-compose-Linux-x86_64
-    dest: /usr/local/bin/docker-compose
+#- name: Install docker-compose
+#  get_url:
+#    url: https://github.com/docker/compose/releases/download/1.21.2/docker-compose-Linux-x86_64
+#    dest: /usr/local/bin/docker-compose
+#
+#- name: chmod docker-compose
+#  file:
+#    path: /usr/local/bin/docker-compose
+#    mode: u+x,g+x,o+x
 
-- name: chmod docker-compose
-  file:
-    path: /usr/local/bin/docker-compose
-    mode: u+x,g+x,o+x
+- name: Install python-pip
+  apt:
+    name: python-pip
+    update_cache: yes
+    state: present
+
+- name: Do pip install docker-compose
+  pip:
+    name: ['docker-compose']
+    state: latest
 
 - name: Upload daemon.json config
   copy:
