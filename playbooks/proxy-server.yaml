@@ -2,13 +2,6 @@
   gather_facts: true
 
   tasks:
-    - import_tasks: tasks/ubuntu-minimal-python.yaml
-
-    - import_tasks: tasks/set-timezone.yaml
-
-    - import_tasks: tasks/set-hostname.yaml
-
-    - import_tasks: tasks/set-hosts.yaml
 
     - import_tasks: tasks/certbot.yaml
 

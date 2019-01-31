@@ -11,9 +11,14 @@
     update_cache: yes
     state: present
 
+#- name: Install Docker-CE {{ docker_ver }}
+#  apt:
+#    name: docker-ce={{ docker_ver }}
+#    update_cache: yes
+#    install_recommends: no
+
 - name: Install Docker-CE
   apt:
-#    name: docker-ce=18.03.1~ce-0~ubuntu
     name: docker-ce
     state: latest
     update_cache: yes
@@ -45,8 +50,8 @@
     src: ../../docker/daemon.json
     dest: /etc/docker/daemon.json
 
-- name: Reload docker service
-  systemd:
-    daemon-reload: yes
-    name: docker
-    state: restarted
+#- name: Reload docker service
+#  systemd:
+#    daemon-reload: yes
+#    name: docker
+#    state: restarted

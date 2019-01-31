@@ -1,9 +1,8 @@
-- hosts: kube-nodes
+- hosts: docker-nodes
   gather_facts: true
 
   vars:
     docker_ver: "18.03.1~ce-0~ubuntu"
-    k8s_ver: "1.10.2-00"
 
   tasks:
     - import_tasks: tasks/set-timezone.yaml
@@ -38,5 +37,3 @@
 #      systemd:
 #        name: docker
 #        state: started
-
-    - import_tasks: tasks/kubernetes.yaml

@@ -1,0 +1,51 @@
+- name: Add Kubernetes official GPG key
+#  shell: "curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -"
+  apt_key:
+    id: BA07F4FB
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+
+- name: Set up the Kubernetes stable repository
+  apt_repository:
+    repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+    state: present
+
+#- name: Installing kubeadm kubelet and kubectl {{ k8s_ver }}
+#  apt:
+#    name:
+#      - kubelet={{ k8s_ver }}
+#      - kubeadm={{ k8s_ver }}
+#      - kubectl={{ k8s_ver }}
+#    update_cache: yes
+#    install_recommends: no
+#    allow_unauthenticated: yes
+
+- name: Installing kubeadm kubelet and kubectl
+  apt:
+    name:
+      - kubelet
+      - kubeadm
+      - kubectl
+    state: latest
+    update_cache: yes
+    install_recommends: no
+    allow_unauthenticated: yes
+
+#    Check Docker Cgroup driver: docker info | grep -i cgroup
+#    Adjust the Kubelet Cgroup driver if different to Docker Cgroup driver
+#
+#    https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/
+#    --cgroup-driver string     Default: "cgroupfs"
+#     Driver that the kubelet uses to manipulate cgroups on the host. Possible values: 'cgroupfs', 'systemd'
+#
+#    As of v1.10, the default is already cgroupfs, so this is no longer required.
+#
+#    - name: Adjust cgroup-driver flag
+#      shell: "sed -i 's/cgroup-driver=systemd/cgroup-driver=cgroupfs/g' /etc/systemd/system/kubelet.service.d/10-kubeadm.conf"
+#
+#    - name: Enable and restart kubelet
+#      systemd:
+#        daemon-reload: yes
+#        name: kubelet
+#        enabled: yes
+#        state: restarted
