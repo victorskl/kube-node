@@ -1,0 +1,12 @@
+; https://raw.githubusercontent.com/ansible/ansible/devel/examples/ansible.cfg
+
+[defaults]
+inventory = hosts.ini
+remote_user = vagrant
+private_key_file = ~/.ssh/id_rsa
+
+[privilege_escalation]
+become = True
+become_user = root
+become_method = sudo
+become_ask_pass = False

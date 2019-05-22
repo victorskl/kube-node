@@ -1,0 +1,17 @@
+- hosts: kube-nodes
+  gather_facts: true
+
+  vars:
+    docker_config_daemon: true
+
+  vars_prompt:
+    - name: "run_init"
+      prompt: "Are you deploying a new server [yes/no]?"
+      private: no
+
+  roles:
+    - common
+    - docker
+    - cluster
+    - swapoff
+    - kubernetes

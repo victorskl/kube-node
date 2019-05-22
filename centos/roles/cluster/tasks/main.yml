@@ -1,0 +1,14 @@
+---
+# tasks file for cluster
+
+- name: Build /etc/hosts
+  lineinfile:
+    dest: /etc/hosts
+    backup: yes
+    regexp: '.*{{ item }}$'
+    line: "{{ hostvars[item].ansible_host }} {{item}}"
+    state: present
+  when:
+    - hostvars[item].ansible_host is defined
+    - run_init | bool
+  with_items: "{{ groups.all }}"

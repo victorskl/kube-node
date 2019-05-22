@@ -1,0 +1,5 @@
+---
+
+# Get CentOS kubelet version as follows:
+#  yum list kubelet --showduplicates | sort -r
+k8s_version: 1.14.2

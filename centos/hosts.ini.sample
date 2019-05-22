@@ -1,0 +1,13 @@
+; https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html
+
+;localhost     ansible_connection=local    ansible_python_interpreter="/usr/bin/env python"
+
+[docker-nodes]
+master        ansible_host=172.16.10.10
+node1         ansible_host=172.16.10.11
+node2         ansible_host=172.16.10.12
+
+[kube-nodes]
+master        ansible_host=172.16.10.10
+node1         ansible_host=172.16.10.11
+node2         ansible_host=172.16.10.12

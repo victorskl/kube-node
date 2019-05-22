@@ -1,0 +1,67 @@
+---
+# https://docs.docker.com/install/linux/docker-ce/centos/
+
+- name: Uninstall old versions
+  yum:
+    name:
+      - docker
+      - docker-client
+      - docker-client-latest
+      - docker-common
+      - docker-latest
+      - docker-latest-logrotate
+      - docker-logrotate
+      - docker-engine
+    update_cache: yes
+    state: absent
+
+- name: Install required packages
+  yum:
+    name:
+      - yum-utils
+      - device-mapper-persistent-data
+      - lvm2
+      - epel-release
+    state: present
+
+- name: Set up the docker-ce stable repository
+  yum_repository:
+    name: docker-ce-stable
+    file: docker-ce
+    description: Docker CE Stable - $basearch
+    baseurl: https://download.docker.com/linux/centos/7/$basearch/stable
+    enabled: yes
+    gpgcheck: yes
+    gpgkey: https://download.docker.com/linux/centos/gpg
+    state: present
+
+- name: Install docker-ce
+  yum:
+    name:
+      - docker-ce-{{ docker_version }}
+      - docker-ce-cli-{{ docker_version }}
+      - containerd.io
+    update_cache: yes
+    state: present
+
+- name: Install essential python tooling
+  package:
+    name:
+      - python-setuptools
+      - python-pip
+    state: present
+
+- name: Install docker-compose
+  pip:
+    name: docker-compose
+    state: present
+
+- name: Start docker service
+  systemd:
+    daemon-reload: yes
+    name: docker
+    state: started
+    enabled: yes
+
+- include_tasks: daemon.yml
+  when: docker_config_daemon

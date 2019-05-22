@@ -1,0 +1,21 @@
+---
+# Based on https://github.com/geerlingguy/ansible-role-swap
+
+- name: Manage swap file entry in fstab.
+  mount:
+    name: none
+    src: "{{ swap_file_path }}"
+    fstype: swap
+    opts: sw
+    passno: 0
+    dump: 0
+    state: absent
+
+- name: Disable swap (if configured).
+  command: swapoff -a
+  when: run_init | bool
+
+- name: Ensure swap file doesn't exist (if configured).
+  file:
+    path: "{{ swap_file_path }}"
+    state: absent

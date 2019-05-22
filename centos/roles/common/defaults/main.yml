@@ -1,0 +1,6 @@
+---
+# defaults file for common
+
+# Get timezone as follows:
+#  timedatectl list-timezones
+timezone: UTC

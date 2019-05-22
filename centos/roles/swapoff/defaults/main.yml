@@ -1,0 +1,4 @@
+---
+# defaults file for swapoff
+
+swap_file_path: /swapfile

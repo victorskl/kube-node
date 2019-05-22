@@ -1,0 +1,16 @@
+---
+# tasks file for common
+
+- name: Set timezone to {{ timezone }}
+  timezone:
+    name: "{{ timezone }}"
+
+- name: Set hostname {{ inventory_hostname }}
+  hostname:
+    name: "{{ inventory_hostname }}"
+
+- name: Disable firewalld
+  systemd:
+    name: firewalld
+    enabled: no
+    state: stopped

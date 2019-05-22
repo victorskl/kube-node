@@ -1,16 +1,5 @@
 # kube-node
 
-Bootstrap Kubernetes node using Ansible
+Using Ansible to prepare Linux based Kubernetes and/or Docker node that is ready to join/form a cluster.
 
-```
-bash setup.sh hosts.ini ubuntu ~/.ssh/id_rsa playbooks/kube-node.yaml
-```
-
-### swapfile
-
-- check to make sure swapfile are commented to disable swap support
-
-```
-ansible -i hosts.ini -u ubuntu kube-nodes -a 'grep swap /etc/fstab'
-```
-
+Though it has written Kubernetes cluster in mind (hence `kube-node`), the script can be adapt to use it for a Docker SWARM cluster or a general cluster setup in Cloud Computing virtual machines.
