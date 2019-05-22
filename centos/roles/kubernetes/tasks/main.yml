@@ -16,7 +16,9 @@
 
 - name: Set SELinux in permissive mode (1/2)
   command: setenforce 0
-  when: run_init | bool
+  when:
+    - ansible_selinux.status == 'enabled'
+    - run_init | bool
 
 - name: Set SELinux in permissive mode (2/2)
   selinux:

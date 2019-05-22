@@ -3,7 +3,7 @@
 # Get CentOS docker-ce version as follows:
 #  yum list docker-ce --showduplicates | sort -r
 # https://docs.docker.com/install/linux/docker-ce/centos/#install-docker-ce-1
-docker_version: 18.09.1
+docker_version: 18.09.6
 
 # true or false for whether to configure docker daemon service
 docker_config_daemon: false
