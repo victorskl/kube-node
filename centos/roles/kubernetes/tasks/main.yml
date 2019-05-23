@@ -22,8 +22,7 @@
 
 - name: Set SELinux in permissive mode (2/2)
   selinux:
-    policy: targeted
-    state: permissive
+    state: disabled
 
 - name: Load br_netfilter module
   modprobe:

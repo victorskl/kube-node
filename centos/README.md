@@ -22,6 +22,7 @@ ansible-playbook -v -e "timezone=Australia/Melbourne" kube-node.yml
 
 ansible -v all -a "date"
 ansible -v all -a "cat /etc/hosts"
+ansible -v all -a "cat /etc/resolv.conf"
 ansible -v all -a "cat /proc/swaps"
 ansible -v all -a "grep swap /etc/fstab"
 ansible -v all -a "docker info" | grep Cgroup
