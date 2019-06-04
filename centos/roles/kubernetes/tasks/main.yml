@@ -14,13 +14,13 @@
     #exclude: kube*
     state: present
 
-- name: Set SELinux in permissive mode (1/2)
+- name: Set SELinux in disabled mode (1/2)
   command: setenforce 0
   when:
     - ansible_selinux.status == 'enabled'
     - run_init | bool
 
-- name: Set SELinux in permissive mode (2/2)
+- name: Set SELinux in disabled mode (2/2)
   selinux:
     state: disabled
 
