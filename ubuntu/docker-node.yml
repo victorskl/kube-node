@@ -1,0 +1,10 @@
+- hosts: docker-nodes
+  gather_facts: true
+
+  vars_prompt:
+    - name: "run_init"
+      prompt: "Are you deploying a new server [yes/no]?"
+      private: no
+
+  roles:
+    - docker

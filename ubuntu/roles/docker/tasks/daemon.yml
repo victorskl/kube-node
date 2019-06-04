@@ -1,0 +1,11 @@
+- name: Upload docker daemon config
+  template:
+    src: daemon.json.j2
+    dest: "/etc/docker/daemon.json"
+
+- name: Reload docker daemon service
+  systemd:
+    daemon-reload: yes
+    name: docker
+    state: restarted
+  when: run_init | bool

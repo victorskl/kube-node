@@ -1,0 +1,40 @@
+---
+# tasks file for proxy
+
+- name: Install Certbot dependencies
+  apt:
+    name:
+      - software-properties-common
+    state: latest
+    install_recommends: no
+
+- name: Add Certbot repo
+  apt_repository:
+    repo: 'ppa:certbot/certbot'
+    update_cache: yes
+
+- name: Install Certbot
+  apt:
+    name:
+      - certbot
+    state: latest
+    install_recommends: no
+
+- name: Install haproxy
+  apt:
+    name:
+      - haproxy
+    state: latest
+    install_recommends: no
+
+- name: Configure haproxy
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+  when: run_init | bool
+
+- name: Start haproxy
+  systemd:
+    name: haproxy
+    enabled: yes
+    state: started

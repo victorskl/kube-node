@@ -1,0 +1,9 @@
+---
+
+# Get Ubuntu docker-ce version as follows:
+#  apt-cache madison docker-ce
+# https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce-1
+docker_version: 5:18.09.6~3-0~ubuntu-bionic
+
+# true or false for whether to configure docker daemon service
+docker_config_daemon: false
