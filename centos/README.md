@@ -19,6 +19,7 @@ ansible -v all -a "cat /etc/hosts"
 ansible -v all -a "date"
 
 ansible-playbook -v -e "timezone=Australia/Melbourne" kube-node.yml
+ansible-playbook -v proxy-node.yml
 
 ansible -v all -a "date"
 ansible -v all -a "cat /etc/hosts"
