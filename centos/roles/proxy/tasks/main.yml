@@ -15,6 +15,11 @@
     update_cache: yes
     state: present
 
+- name: Certbot fix for requests package
+  pip:
+    name: requests==2.6.0
+    state: present
+
 - name: Install HAProxy
   yum:
     name:
