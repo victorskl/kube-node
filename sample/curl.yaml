@@ -1,0 +1,16 @@
+# https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/
+# https://kubernetes.io/docs/reference/kubectl/docker-cli-to-kubectl/
+# The following `kubectl run [...]` will also create deployment; therefore, for clean up, need to `kubectl delete deploy curl`
+# kubectl run curl --image=radial/busyboxplus:curl -i --tty
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: curl
+  namespace: default
+spec:
+  containers:
+    - name: curl
+      image: radial/busyboxplus:curl
+      imagePullPolicy: IfNotPresent
+  restartPolicy: Always
