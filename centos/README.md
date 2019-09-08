@@ -25,7 +25,6 @@ Using Ansible to prepare CentOS based Kubernetes and/or Docker node that is read
     cd centos
     
     cp ansible.cfg.sample ansible.cfg
-    cp hosts.ini.sample hosts.ini
     
     ansible -v all -m ping
     ansible master -m setup
@@ -36,20 +35,21 @@ Using Ansible to prepare CentOS based Kubernetes and/or Docker node that is read
 
 - deploy docker nodes (skip if kubernetes)
     ```
-    ansible-playbook -v docker-node.yml
+    ansible-playbook -v docker_node.yml
     ```
 
 - deploy proxy nodes
     ```
-    ansible-playbook -v proxy-node.yml
+    ansible-playbook -v proxy_node.yml
     ```
 
 - deploy kubernetes nodes
     ```
-    ansible-playbook -v kube-node.yml
+    ansible-playbook -v kube_node.yml
     
     (OR also set specific timezone)
-    ansible-playbook -v -e "timezone=Australia/Melbourne" kube-node.yml
+    ansible-playbook -v -e "timezone=Australia/Melbourne" kube_node.yml
+    ansible-playbook -v -e "docker_version=19.03.2" -e "k8s_version=1.15.3" kube_node.yml  
     ```
 
 - observe deployment
@@ -62,9 +62,9 @@ Using Ansible to prepare CentOS based Kubernetes and/or Docker node that is read
     ansible -v all -a "docker info" | grep Cgroup
     ```
 
-### Configure kubernetes cluster
+### Configure Kubernetes Cluster
 
-The playbook `kube-node.yml` install docker, kubeadm and related components as described in [installing kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/).
+The playbook `kube_node.yml` install docker, kubeadm and related components as described in [installing kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/).
 
 - Follow up to complete the kubernetes cluster as described in:
     - https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/
@@ -97,3 +97,23 @@ The playbook `kube-node.yml` install docker, kubeadm and related components as d
     node1    Ready      <none>   50s   v1.14.2
     node2    NotReady   <none>   22s   v1.14.2
     ```
+
+## Advanced Deployment 
+
+Create a new inventory set and encryption with `ansible-vault` on some secret variables
+
+```
+mkdir -p inventories/home
+
+(configure hosts and variables; vault encrypt if necessary)
+
+ansible-vault encrypt inventories/home/hosts
+
+ansible -v all -m ping -i inventories/home -u victorskl
+
+ansible-playbook -v docker_node.yml -i inventories/home -u victorskl
+ansible-playbook -v proxy_node.yml -i inventories/home -u victorskl
+
+ansible -v all -a "docker info" -i inventories/home -u victorskl | grep Cgroup
+ansible -v all -a "docker info" -i inventories/home -u victorskl | grep Version
+```

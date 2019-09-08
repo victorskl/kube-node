@@ -1,9 +1,11 @@
 ; https://raw.githubusercontent.com/ansible/ansible/devel/examples/ansible.cfg
+; https://docs.ansible.com/ansible/latest/reference_appendices/config.html
 
 [defaults]
-inventory = hosts.ini
+inventory = inventories/vagrant
 remote_user = vagrant
-private_key_file = ~/.ssh/id_rsa
+private_key_file = $HOME/.ssh/id_rsa
+vault_password_file = $HOME/.ssh/id_rsa
 
 [privilege_escalation]
 become = True

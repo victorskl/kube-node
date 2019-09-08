@@ -1,8 +1,5 @@
-- hosts: kube-nodes
+- hosts: proxy_nodes
   gather_facts: true
-
-  vars:
-    docker_config_daemon: true
 
   vars_prompt:
     - name: "run_init"
@@ -10,8 +7,4 @@
       private: no
 
   roles:
-    - common
-    - docker
-    - cluster
-    - swapoff
-    - kubernetes
+    - proxy
